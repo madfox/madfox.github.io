@@ -25,11 +25,11 @@ var dir = function(u, data){
 };
 
 var re_api = /\.googleapis\.com\//i;
+var opts = { encoding: "utf8" };
 dir("./").then(function(files){
 	return files.reduce(function(chain, file){
 		return chain.then(function(data){
-			return fs.readFile(file).then(function(content){
-				content = content.toString("utf8");
+			return fs.readFile(file, opts).then(function(content){
 				if(re_api.test(content)){
 					return fs.writeFile(file, content.replace(re_api, ".useso.com/")).then(function(){
 						data.push(file);
